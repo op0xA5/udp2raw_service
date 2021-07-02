@@ -1,0 +1,14 @@
+[Unit]
+Description=udp2raw
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/local/sbin/udp2raw-service-start
+ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /var/run/udp2raw.pid
+PIDFile=/var/run/udp2raw.pid
+TimeoutStopSec=5
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target
