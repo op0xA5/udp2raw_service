@@ -1,0 +1,11 @@
+#!/bin/bash
+
+UDP2RAW=/usr/local/sbin/udp2raw
+CONF=/etc/udp2raw/server.conf
+PIDFILE=/var/run/udp2raw.pid
+
+$UDP2RAW --conf-file $CONF --gen-add
+
+setcap cap_net_raw+ep $UDP2RAW
+
+/sbin/start-stop-daemon --start --background --exec $UDP2RAW --chuid nobody --make-pidfile --pidfile $PIDFILE -- --conf-file $CONF
